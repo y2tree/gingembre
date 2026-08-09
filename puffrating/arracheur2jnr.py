@@ -1,0 +1,150 @@
+import requests
+from bs4 import BeautifulSoup
+
+url = "https://www.jnr-store.fr/product/jnr-falcon-x-18000-bouffees-cigarette-electronique-jetable/"
+page = requests.get(url)
+
+print(page.status_code)
+# print(len(page.text))
+
+soup = BeautifulSoup(page.text, "html.parser")
+select = soup.find("select", id="pa_saveur")
+
+# for option in select.find_all("option"):
+#     print(option.text)
+
+saveurs = []
+
+for option in select.find_all("option"):
+    if option.get("value") == "":
+        continue
+    saveurs.append(option.text)
+
+print(len(saveurs))
+print(saveurs[0])    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# <!DOCTYPE html> 
+# <html lang="fr">
+#     <head>
+#         <meta charset="UTF-8">
+#         <title>Qu'est-ce que je mange ce soir ?</title>
+#     </head>
+#     <script>
+#         <select id="pa_saveur" class="" name="attribute_pa_saveur" data-attribute_name="attribute_pa_saveur" data-show_option_none="yes">
+#             <option value="">Choisir une option</option>
+#             <option value="apple-pear">Apple pear</option>
+#             <option value="banana-ice">Banana Ice</option>
+#             <option value="berry-burst">Berry Burst</option>
+#             <option value="black-ice">Black Ice</option>
+#             <option value="blue-cherry-explosion">Blue cherry explosion</option>
+#             <option value="blue-razz-cherry">Blue Razz Cherry</option>
+#             <option value="blue-razz-ice">Blue Razz Ice</option>
+#             <option value="blueberry-cherry-cranberry">Blueberry Cherry Cranberry</option>
+#             <option value="blueberry-kiwi">Blueberry Kiwi</option>
+#             <option value="blueberry-raspberry">Blueberry Raspberry</option>
+#             <option value="blueberry-raspberry-cherry">Blueberry Raspberry Cherry</option>
+#             <option value="cherry-berry">Cherry Berry</option>
+#             <option value="cherry-ice">Cherry Ice</option>
+#             <option value="cherry-peach-lemonade">Cherry Peach Lemonade</option>
+#             <option value="cherry-watermelon-freeze">Cherry Watermelon Freeze</option>
+#             <option value="cool-mint">Cool Mint</option>
+#             <option value="grape-ice">Grape Ice</option>
+#             <option value="gummy-bear">Gummy Bear</option>
+#             <option value="hawaii">Hawaii</option>
+#             <option value="jnr-blue-cocoa-mousseux">JNR Blue Cocoa Mousseux</option>
+#             <option value="jnr-sparkling-cherry">JNR Sparkling Cherry</option>
+#             <option value="jnr-tangy-fruit-berries">JNR Tangy fruit Berries</option>
+#             <option value="jnr-watermelon-rooty-fizz">JNR Watermelon Rooty Fizz</option>
+#             <option value="kiwi-watermelon-ice">Kiwi Watermelon Ice</option>
+#             <option value="lady-killa">Lady Killa</option>
+#             <option value="lemon-lime-2">Lemon Lime</option>
+#             <option value="love-66">Love 66</option>
+#             <option value="mi-amor">Mi Amor</option>
+#             <option value="mixed-berries">Mixed Berries</option>
+#             <option value="mr-blue">Mr Blue</option>
+#             <option value="passion-fruit-kiwi">Passion Fruit Kiwi</option>
+#             <option value="peach-berry">Peach Berry</option>
+#             <option value="peach-mango-pineapple">Peach Mango Pineapple</option>
+#             <option value="raspberry-rhubarb">Raspberry rhubarb</option>
+#             <option value="raspberry-rouge-gumdrop">Raspberry Rouge Gumdrop</option>
+#             <option value="skittles">Skittles</option>
+#             <option value="sour-apple-ice">Sour Apple Ice</option>
+#             <option value="strawberry-banana">Strawberry Banana</option>
+#             <option value="strawberry-ice">Strawberry Ice</option>
+#             <option value="strawberry-kiwi">Strawberry Kiwi</option>
+#             <option value="strawberry-watermelon-ice">Strawberry Watermelon Ice</option>
+#             <option value="triple-melon">Triple Melon</option>
+#             <option value="tropical-fruit">Tropical fruit</option>
+#             <option value="watermelon-bubblegum">Watermelon Bubblegum</option>
+#             <option value="watermelon-ice">Watermelon Ice</option>
+#             <option value="watermelon-lychee">Watermelon Lychee</option>
+#             <option value="white-peach-razz">White Peach Razz</option>
+#         </select>
+#         const plats = ["Pates carbonara", "Pizza", "Salade cesar", 
+#         "Curry", "Omelette"];
+#         function tirerAuSort() {
+#             const index = Math.floor(Math.random() * plats.length);
+#             console.log(index, plats[index]);
+#             document.getElementById("resultat").textContent = plats[index];
+#         }
+#         function ajouterPlat() {
+#             const champ = document.getElementById("nouveauPlat");
+#             if (champ.value.trim() === "") {
+#                 return;
+#             }
+#             plats.push(champ.value);
+#             champ.value = "";
+#             afficherListe();
+#         }
+#         function afficherListe() {
+#             const liste = document.getElementById("listePlats");
+#             liste.innerHTML = "";
+#             for (const plat of plats) {
+#                 const ligne = document.createElement("li");
+#                 ligne.textContent = plat;
+#                 liste.appendChild(ligne);
+#             }
+#         }
+#     </script>
+#     <body>
+#         <h1>Qu'est ce que je mange ce soir ?</h1>
+#         <p id="resultat">Clique sur le bouton...</p>
+#         <boutton onclick="tirerAuSort()">Tire au sort</boutton>
+#         <input id="nouveauPlat" type="text" placeholder="Un autre plat...">
+#         <boutton onclick="ajouterPlat()">ajouter</boutton>
+#         <ul id="listePlats"></ul>
+#         <img width="600" height="600" 
+#             src="https://www.jnr-store.fr/wp-content/uploads/2025/11/JNR-Falcon-X-18000-18K-4-600x600.jpeg" 
+#             class="woocommerce-main-image wp-post-image" alt="" href="https://www.jnr-store.fr/wp-content/uploads/2025/11/JNR-Falcon-X-18000-18K-4.jpeg" title="JNR-Falcon-X-18000-18K (4)" data-large_image_width="1080" data-large_image_height="1080" decoding="async" srcset="https://www.jnr-store.fr/wp-content/uploads/2025/11/JNR-Falcon-X-18000-18K-4-600x600.jpeg 600w, https://www.jnr-store.fr/wp-content/uploads/2025/11/JNR-Falcon-X-18000-18K-4-400x400.jpeg 400w" sizes="(max-width: 600px) 100vw, 600px">    </body>
+# </html>
